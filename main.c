@@ -44,9 +44,12 @@ void setTaskCondition(size_t *task, int *arrayA, int *arrayB, size_t *sizeA, siz
 void task1(int const *arrayA, const int *arrayB, int *arrayC, const size_t *sizeA, const size_t *sizeB, size_t *sizeC) {
     for (int i = 0; i < *sizeA; ++i) {
         int isUnique = 1;
-        for (int j = 0; j < *sizeC; ++j) {
+        int j = 0;
+        while (isUnique && j < *sizeC) {
             if (arrayA[i] == arrayC[j])
                 isUnique = 0;
+            else
+                j++;
         }
         if (isUnique) {
             arrayC[*sizeC] = arrayA[i];
@@ -56,9 +59,12 @@ void task1(int const *arrayA, const int *arrayB, int *arrayC, const size_t *size
 
     for (int i = 0; i < *sizeB; ++i) {
         int isUnique = 1;
-        for (int j = 0; j < *sizeC; ++j) {
+        int j = 0;
+        while (isUnique && j < *sizeC) {
             if (arrayB[i] == arrayC[j])
                 isUnique = 0;
+            else
+                j++;
         }
         if (isUnique) {
             arrayC[*sizeC] = arrayB[i];
@@ -77,22 +83,150 @@ void task1(int const *arrayA, const int *arrayB, int *arrayC, const size_t *size
 void task2(int const *arrayA, const int *arrayB, int *arrayC, const size_t *sizeA, const size_t *sizeB, size_t *sizeC) {
     for (int i = 0; i < *sizeA; ++i) {
         int isUnique = 1;
-        for (int j = 0; j < *sizeB; ++j) {
+        int j = 0;
+        while (isUnique && j < *sizeB) {
             if (arrayA[i] == arrayB[j])
                 isUnique = 0;
+            else
+                j++;
         }
         if (!isUnique) {
-            int isSubUnique = 1;
-            for (int k = 0; k < *sizeC; ++k) {
-                if(arrayA[i] == arrayC[k])
-                    is
-            }
             arrayC[*sizeC] = arrayA[i];
             *sizeC += 1;
         }
     }
 }
 
+//Вариант 3
+//
+//Дано:
+//
+//А – массив натуральных чисел, в котором нет одинаковых элементов;
+//
+//В – массив натуральных чисел, в котором нет одинаковых элементов.
+//
+//Получить массив С, содержащий все элементы массива А, которых нет в В.
+
+void task3(int const *arrayA, const int *arrayB, int *arrayC, const size_t *sizeA, const size_t *sizeB, size_t *sizeC) {
+    for (int i = 0; i < *sizeA; ++i) {
+        int isUnique = 1;
+        int j = 0;
+        while (isUnique && j < *sizeB) {
+            if (arrayA[i] == arrayB[j])
+                isUnique = 0;
+            else
+                j++;
+        }
+        if (isUnique) {
+            arrayC[*sizeC] = arrayA[i];
+            *sizeC += 1;
+        }
+    }
+}
+
+//Вариант 4
+//
+//Дано:
+//
+//А – массив натуральных чисел, в котором нет одинаковых элементов;
+//
+//В – массив натуральных чисел, в котором нет одинаковых элементов.
+//
+//Получить массив С, содержащий все элементы массива А, которых нет в В и все элементы массива В, которых нет в А.
+
+void task4(int const *arrayA, const int *arrayB, int *arrayC, const size_t *sizeA, const size_t *sizeB, size_t *sizeC) {
+    for (int i = 0; i < *sizeA; ++i) {
+        int isUnique = 1;
+        int j = 0;
+        while (isUnique && j < *sizeB) {
+            if (arrayA[i] == arrayB[j])
+                isUnique = 0;
+            else
+                j++;
+        }
+        if (isUnique) {
+            arrayC[*sizeC] = arrayA[i];
+            *sizeC += 1;
+        }
+    }
+
+    for (int i = 0; i < *sizeB; ++i) {
+        int isUnique = 1;
+        int j = 0;
+        while (isUnique && j < *sizeA) {
+            if (arrayB[i] == arrayA[j])
+                isUnique = 0;
+            else
+                j++;
+        }
+        if (isUnique) {
+            arrayC[*sizeC] = arrayB[i];
+            *sizeC += 1;
+        }
+    }
+}
+
+//Вариант 5
+//
+//Дано:
+//
+//А – массив натуральных чисел, в котором нет одинаковых элементов;
+//
+//В – массив натуральных чисел, в котором нет одинаковых элементов.
+//
+//Определить, верно ли, что массив В содержит каждый элемент массива А.
+void task5(int const *arrayA, const int *arrayB, int *arrayC, const size_t *sizeA, const size_t *sizeB, size_t *sizeC) {
+    if (*sizeA <= *sizeB) {
+        int i = 0;
+        int isFound = 1;
+        while (isFound && i < *sizeA) {
+            int j = 0;
+            while (arrayA[i] != arrayB[j] && j < *sizeB) {
+                j++;
+            }
+            if (j == *sizeB)
+                isFound = 0;
+            else
+                i++;
+        }
+        arrayC[0] = i == *sizeA;
+        *sizeC += 1;
+    } else {
+        arrayC[0] = 0;
+        *sizeC += 1;
+    }
+}
+
+//Вариант 6
+//
+//Дано:
+//
+//А – массив натуральных чисел, в котором нет одинаковых элементов;
+//
+//В – массив натуральных чисел, в котором нет одинаковых элементов.
+//
+//Определить, верно ли, что массивы А и В состоят из одинаковых элементов.
+void task6(int const *arrayA, const int *arrayB, int *arrayC, const size_t *sizeA, const size_t *sizeB, size_t *sizeC) {
+    if (*sizeA == *sizeB) {
+        int i = 0;
+        int isFound = 1;
+        while (isFound && i < *sizeA) {
+            int j = 0;
+            while (arrayA[i] != arrayB[j] && j < *sizeB) {
+                j++;
+            }
+            if (j == *sizeB)
+                isFound = 0;
+            else
+                i++;
+        }
+        arrayC[0] = i == *sizeA;
+        *sizeC += 1;
+    } else {
+        arrayC[0] = 0;
+        *sizeC += 1;
+    }
+}
 
 
 void doTask(const size_t task, int *arrayA, int *arrayB, int *arrayC, size_t *sizeA, size_t *sizeB, size_t *sizeC) {
@@ -104,10 +238,16 @@ void doTask(const size_t task, int *arrayA, int *arrayB, int *arrayC, size_t *si
             task2(arrayA, arrayB, arrayC, sizeA, sizeB, sizeC);
             break;
         case 3:
-            puts("task 3");
+            task3(arrayA, arrayB, arrayC, sizeA, sizeB, sizeC);
             break;
         case 4:
-            puts("task 4");
+            task4(arrayA, arrayB, arrayC, sizeA, sizeB, sizeC);
+            break;
+        case 5:
+            task5(arrayA, arrayB, arrayC, sizeA, sizeB, sizeC);
+            break;
+        case 6:
+            task6(arrayA, arrayB, arrayC, sizeA, sizeB, sizeC);
             break;
         default:
             break;
