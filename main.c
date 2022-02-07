@@ -332,28 +332,65 @@ void task9(int const *arrayA, const int *arrayB, int *arrayC, const size_t *size
 //
 //Получить упорядоченный по возрастанию массив С, содержащий все элементы массива А, которых нет в В.
 
-void task10(int const *arrayA, const int *arrayB, int *arrayC, const size_t *sizeA, const size_t *sizeB, size_t *sizeC) {
+void
+task10(int const *arrayA, const int *arrayB, int *arrayC, const size_t *sizeA, const size_t *sizeB, size_t *sizeC) {
     size_t iReadA = 0;
     size_t iReadB = 0;
     size_t iWriteC = 0;
-    while(iReadA < *sizeA && iReadB < *sizeB){
-        if(arrayA[iReadA] < arrayB[iReadB]){
+    while (iReadA < *sizeA && iReadB < *sizeB) {
+        if (arrayA[iReadA] < arrayB[iReadB]) {
             arrayC[iWriteC] = arrayA[iReadA];
             iReadA++;
             iWriteC++;
-        }else if(arrayA[iReadA] == arrayB[iReadB]){
+        } else if (arrayA[iReadA] == arrayB[iReadB]) {
             iReadA++;
             iReadB++;
-        }
-        else{
+        } else {
             iReadB++;
         }
     }
-    if (iReadA != *sizeA){
-        while(iReadA < *sizeA){
+    if (iReadA != *sizeA) {
+        while (iReadA < *sizeA) {
             arrayC[iWriteC] = arrayA[iReadA];
             iWriteC++;
         }
+    }
+    *sizeC = iWriteC;
+}
+
+//Даны массивы натуральных чисел А и В, упорядоченные по возрастанию.
+//
+//Получить упорядоченный по возрастанию массив С,
+//
+// содержащий все элементы массива А, которых нет в В и все элементы массива В, которых нет в А.
+void
+task11(int const *arrayA, const int *arrayB, int *arrayC, const size_t *sizeA, const size_t *sizeB, size_t *sizeC) {
+    size_t iReadA = 0;
+    size_t iReadB = 0;
+    size_t iWriteC = 0;
+    while (iReadA < *sizeA && iReadB < *sizeB) {
+        if (arrayA[iReadA] < arrayB[iReadB]) {
+            arrayC[iWriteC] = arrayA[iReadA];
+            iReadA++;
+            iWriteC++;
+        } else if (arrayA[iReadA] == arrayB[iReadB]) {
+            iReadA++;
+            iReadB++;
+        } else {
+            arrayC[iWriteC] = arrayB[iReadB];
+            iReadB++;
+            iWriteC++;
+        }
+    }
+        while(iReadA != *sizeA){
+            arrayC[iWriteC] = arrayA[iReadA];
+            iReadA++;
+            iWriteC++;
+        }
+    while(iReadB != *sizeB){
+        arrayC[iWriteC] = arrayB[iReadB];
+        iReadB++;
+        iWriteC++;
     }
     *sizeC = iWriteC;
 }
@@ -390,6 +427,9 @@ void doTask(const size_t task, int *arrayA, int *arrayB, int *arrayC, size_t *si
             break;
         case 10:
             task10(arrayA, arrayB, arrayC, sizeA, sizeB, sizeC);
+            break;
+        case 11:
+            task11(arrayA, arrayB, arrayC, sizeA, sizeB, sizeC);
             break;
         default:
             break;
