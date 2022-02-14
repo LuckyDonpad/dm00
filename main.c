@@ -1,4 +1,5 @@
 #include <stdio.h>
+#define CAPACITY 100
 
 // ввод в масив array с клавиатуры size элементов
 void inputArray(int *array, size_t size) {
@@ -464,11 +465,10 @@ void doTask(const size_t task, int *arrayA, int *arrayB, int *arrayC, size_t *si
 
 
 int main() {
-    size_t capacity = 100;
     size_t sizeA, sizeB, task;
-    int arrayA[capacity];
-    int arrayB[capacity];
-    int arrayC[capacity * 2];
+    int arrayA[CAPACITY];
+    int arrayB[CAPACITY];
+    int arrayC[CAPACITY * 2];
     size_t sizeC = 0;
 
     setTaskCondition(&task, arrayA, arrayB, &sizeA, &sizeB);
